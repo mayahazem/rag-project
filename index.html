@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Per Ankh — House of Life Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --nile: #0d1b22;
+      --nile-2: #142933;
+      --lapis: #1c3b4f;
+      --stone: #e6d8b3;
+      --stone-dark: #cbb987;
+      --gold: #c8a239;
+      --gold-bright: #e9c96b;
+      --turquoise: #3a9b8a;
+      --carnelian: #ab4a30;
+      --ink: #2a2010;
+      --papyrus-text: #f2e8c9;
+      --muted: #8fa8ac;
+      --radius-panel: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+
+    body {
+      min-height: 100vh;
+      color: var(--papyrus-text);
+      font-family: "Work Sans", sans-serif;
+      background:
+        radial-gradient(ellipse at 20% -10%, rgba(200, 162, 57, .10), transparent 40%),
+        radial-gradient(ellipse at 100% 0%, rgba(58, 155, 138, .10), transparent 35%),
+        var(--nile);
+    }
+
+    .app { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ============ Header ============ */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 76px;
+      padding: 12px 32px;
+      border-bottom: 2px solid var(--gold);
+      background: linear-gradient(180deg, rgba(13, 27, 34, .96), rgba(13, 27, 34, .85));
+      backdrop-filter: blur(10px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; }
+    .crest {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold-bright);
+      background: rgba(200, 162, 57, .08);
+      font-size: 1.4rem;
+    }
+    .brand h1 {
+      font: 700 1.3rem "Cinzel", serif;
+      letter-spacing: .05em;
+      color: var(--stone);
+    }
+    .brand p { margin-top: 3px; color: var(--muted); font-size: .72rem; letter-spacing: .04em; }
+
+    .connection { display: flex; align-items: center; gap: 10px; }
+    .connection input {
+      width: 240px;
+      border: 1px solid var(--lapis);
+      border-radius: 999px;
+      padding: 10px 16px;
+      outline: none;
+      color: var(--papyrus-text);
+      background: rgba(28, 59, 79, .5);
+      font: .8rem "Work Sans", sans-serif;
+    }
+    .connection input:focus { border-color: var(--gold); }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: var(--papyrus-text);
+      background: transparent;
+      font: 600 .8rem "Work Sans", sans-serif;
+      transition: transform .15s, border-color .15s, background .15s;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: .5; cursor: wait; transform: none; }
+
+    .ping {
+      border: 1px solid var(--lapis);
+      border-radius: 999px;
+      padding: 9px 16px;
+    }
+    .ping:hover { border-color: var(--gold); color: var(--gold-bright); }
+
+    .eye-status {
+      font-size: 1.15rem;
+      filter: grayscale(1) brightness(.7);
+      transition: filter .25s;
+    }
+    .eye-status.ok { filter: none; color: var(--turquoise); text-shadow: 0 0 10px rgba(58,155,138,.5); }
+    .eye-status.error { filter: none; color: var(--carnelian); text-shadow: 0 0 10px rgba(171,74,48,.5); }
+
+    /* ============ Workspace ============ */
+    .workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(320px, .95fr) minmax(400px, 1.15fr);
+      gap: 22px;
+      width: min(1220px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    .panel {
+      min-height: 540px;
+      overflow: hidden;
+      border: 1px solid rgba(200, 162, 57, .3);
+      border-radius: var(--radius-panel);
+      background: linear-gradient(160deg, rgba(20, 41, 51, .9), rgba(13, 27, 34, .95));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .35), inset 0 0 0 1px rgba(230, 216, 179, .04);
+      position: relative;
+    }
+
+    /* corner glyph ornaments, evoking carved stela corners */
+    .panel::before, .panel::after {
+      content: "𓊪";
+      position: absolute;
+      top: 10px;
+      color: var(--gold);
+      opacity: .35;
+      font-size: .95rem;
+    }
+    .panel::before { left: 12px; }
+    .panel::after { right: 12px; transform: scaleX(-1); }
+
+    .input-panel { display: flex; flex-direction: column; padding: 30px 26px 26px; }
+    .panel-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .eyebrow { color: var(--gold); font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .hint { color: var(--muted); font-size: .72rem; }
+    .input-panel h2, .result-panel h2 { font: 600 1.7rem "Cinzel", serif; color: var(--stone); letter-spacing: .02em; }
+    .input-panel > p { margin: 10px 0 22px; color: var(--muted); line-height: 1.6; font-size: .9rem; }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 190px;
+      border: 1px solid var(--lapis);
+      border-radius: 8px;
+      padding: 16px;
+      resize: none;
+      outline: none;
+      color: var(--papyrus-text);
+      background: rgba(9, 18, 23, .55);
+      font: .95rem/1.6 "Work Sans", sans-serif;
+    }
+    textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200, 162, 57, .12); }
+    textarea::placeholder { color: #5f7075; }
+
+    .ask-button {
+      margin-top: 16px;
+      padding: 15px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      font: 700 .88rem "Work Sans", sans-serif;
+      letter-spacing: .03em;
+    }
+    .ask-button:hover { box-shadow: 0 8px 22px rgba(200, 162, 57, .28); }
+
+    .examples { margin-top: 22px; }
+    .examples p { margin-bottom: 10px; color: var(--muted); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 8px 12px;
+      border: 1px solid var(--lapis);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: .74rem;
+      background: rgba(28, 59, 79, .25);
+    }
+    .chip:hover { border-color: var(--gold); color: var(--gold-bright); }
+
+    /* ============ Result panel ============ */
+    .result-panel { display: flex; flex-direction: column; }
+    .result-title {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 26px 26px 20px; border-bottom: 1px solid rgba(200, 162, 57, .25);
+    }
+    .status-text { color: var(--muted); font-size: .72rem; letter-spacing: .03em; }
+    .result-body { flex: 1; padding: 28px 26px; overflow-y: auto; }
+
+    .empty-state { height: 100%; display: grid; place-content: center; gap: 12px; text-align: center; color: var(--muted); }
+    .empty-icon { font-size: 2.6rem; color: var(--gold); opacity: .55; }
+    .empty-state h3 { color: var(--stone); font: 600 1.1rem "Cinzel", serif; letter-spacing: .02em; }
+    .empty-state p { max-width: 260px; font-size: .84rem; line-height: 1.55; }
+
+    .answer { display: none; animation: rise .4s ease both; }
+    .answer-question { margin-bottom: 18px; color: var(--gold-bright); font-size: .84rem; line-height: 1.5; }
+
+    /* Signature element: the answer sits inside a cartouche, echoing how a
+       pharaoh's name was ringed for protection and permanence. */
+    .cartouche {
+      position: relative;
+      padding: 26px 40px;
+      border: 3px solid var(--stone-dark);
+      border-radius: 999px / 60px;
+      background: linear-gradient(175deg, #ede0bb, #e0cf9c);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: .96rem;
+      white-space: pre-wrap;
+    }
+    .cartouche::before, .cartouche::after {
+      content: "";
+      position: absolute;
+      top: -3px; bottom: -3px;
+      width: 10px;
+      border: 3px solid var(--stone-dark);
+      background: #e0cf9c;
+    }
+    .cartouche::before { left: -8px; border-radius: 10px 0 0 10px; border-right: none; }
+    .cartouche::after { right: -8px; border-radius: 0 10px 10px 0; border-left: none; }
+
+    .sources { margin-top: 26px; }
+    .sources h3 { margin-bottom: 12px; color: var(--gold); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+    .source {
+      display: flex; align-items: center; gap: 12px; margin-top: 8px;
+      padding: 11px 14px; border-radius: 8px;
+      background: rgba(230, 216, 179, .05);
+      border: 1px solid rgba(200, 162, 57, .15);
+      color: var(--muted); font-size: .82rem;
+    }
+    .rank-glyph { min-width: 46px; color: var(--gold-bright); font-size: .95rem; letter-spacing: 2px; }
+    .source .book-name { color: var(--stone); }
+    .source .page-tag { margin-left: auto; color: var(--turquoise); font-size: .74rem; letter-spacing: .03em; }
+
+    .error-bar {
+      display: none;
+      width: min(1220px, calc(100% - 48px));
+      margin: -14px auto 26px;
+      padding: 13px 16px;
+      border: 1px solid rgba(171, 74, 48, .5);
+      border-left: 4px solid var(--carnelian);
+      border-radius: 6px;
+      color: #f3c9bd;
+      background: rgba(90, 33, 22, .35);
+      font-size: .85rem;
+    }
+    .error-bar.show { display: block; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .answer { animation: none; }
+      button:hover { transform: none; }
+    }
+
+    @media (max-width: 800px) {
+      .topbar { align-items: flex-start; flex-direction: column; padding: 16px 20px; }
+      .connection { width: 100%; }
+      .connection input { flex: 1; width: auto; }
+      .workspace { grid-template-columns: 1fr; width: min(100% - 28px, 680px); padding: 20px 0; }
+      .panel { min-height: auto; }
+      .input-panel { min-height: 440px; }
+      .result-panel { min-height: 420px; }
+      .error-bar { width: min(100% - 28px, 680px); }
+      .cartouche { padding: 22px 30px; }
+    }
+
+    @media (max-width: 460px) {
+      .connection { flex-wrap: wrap; }
+      .connection input { width: 100%; flex-basis: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="crest">☥</div>
+        <div>
+          <h1>Per Ankh</h1>
+          <p>The House of Life — archive of ancient Egypt</p>
+        </div>
+      </div>
+
+      <div class="connection">
+        <input id="api-url" value="http://127.0.0.1:8000" aria-label="FastAPI URL" />
+        <button id="health-button" class="ping" type="button">Ping the temple</button>
+        <span id="health-dot" class="eye-status" title="API status">𓂀</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel input-panel">
+        <div class="panel-heading">
+          <span class="eyebrow">Consult the scribe</span>
+          <span class="hint">Ctrl + Enter to ask</span>
+        </div>
+        <h2>Your question</h2>
+        <p>Search the chronicles of ancient Egypt. The scribe answers only from what is written on the retrieved pages.</p>
+
+        <textarea id="question" placeholder="Who was Ramses II?"></textarea>
+        <button id="ask-button" class="ask-button" type="button">Consult the Archive</button>
+
+        <div class="examples">
+          <p>Common inquiries</p>
+          <div class="chips">
+            <button class="chip" type="button">Who were the Hyksos?</button>
+            <button class="chip" type="button">What happened during the Old Kingdom?</button>
+            <button class="chip" type="button">How did the pyramids get built?</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="result-title">
+          <div>
+            <span class="eyebrow">The scroll's reply</span>
+            <h2>Answer</h2>
+          </div>
+          <span id="result-status" class="status-text">Awaiting a question</span>
+        </div>
+
+        <div class="result-body">
+          <div id="empty-state" class="empty-state">
+            <div class="empty-icon">𓁶</div>
+            <h3>The archive is unsealed</h3>
+            <p>Ask a question to retrieve pages from the chronicles and receive an answer.</p>
+          </div>
+
+          <div id="answer-section" class="answer">
+            <p id="answer-question" class="answer-question"></p>
+            <div class="cartouche">
+              <div id="answer-text"></div>
+            </div>
+            <div id="sources-section" class="sources">
+              <h3>Retrieved pages</h3>
+              <div id="sources-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="error-bar" class="error-bar"></div>
+  </div>
+
+  <script>
+    const apiUrlInput = document.getElementById("api-url");
+    const healthButton = document.getElementById("health-button");
+    const healthDot = document.getElementById("health-dot");
+    const questionInput = document.getElementById("question");
+    const askButton = document.getElementById("ask-button");
+    const resultStatus = document.getElementById("result-status");
+    const emptyState = document.getElementById("empty-state");
+    const answerSection = document.getElementById("answer-section");
+    const answerQuestion = document.getElementById("answer-question");
+    const answerText = document.getElementById("answer-text");
+    const sourcesSection = document.getElementById("sources-section");
+    const sourcesList = document.getElementById("sources-list");
+    const errorBar = document.getElementById("error-bar");
+
+    // Egyptian tally strokes: a single stroke glyph repeated marks rank 1, 2, 3...
+    const STROKE = "𓏤";
+    function rankGlyph(n) {
+      return STROKE.repeat(Math.min(n, 5));
+    }
+
+    function getApiUrl() {
+      return apiUrlInput.value.trim().replace(/\/$/, "");
+    }
+
+    function showError(message) {
+      errorBar.textContent = message;
+      errorBar.classList.add("show");
+    }
+
+    function clearError() {
+      errorBar.classList.remove("show");
+    }
+
+    async function typeAnswer(text) {
+      answerText.textContent = "";
+      for (const letter of text) {
+        answerText.textContent += letter;
+        await new Promise((resolve) => setTimeout(resolve, 12));
+      }
+    }
+
+    healthButton.addEventListener("click", async () => {
+      clearError();
+      healthButton.textContent = "Listening...";
+      healthButton.disabled = true;
+      healthDot.className = "eye-status";
+
+      try {
+        const response = await fetch(`${getApiUrl()}/health`);
+        const data = await response.json();
+        healthDot.className = data.status === "ok" ? "eye-status ok" : "eye-status error";
+        if (data.status !== "ok") showError("The temple answered, but its omen was not favorable.");
+      } catch {
+        healthDot.className = "eye-status error";
+        showError("Could not reach the API. Check the URL and make sure FastAPI is running.");
+      }
+
+      healthButton.textContent = "Ping the temple";
+      healthButton.disabled = false;
+    });
+
+    async function askQuestion() {
+      clearError();
+      const query = questionInput.value.trim();
+      if (!query) {
+        showError("Write a question first.");
+        return;
+      }
+
+      askButton.disabled = true;
+      askButton.textContent = "Consulting the scribes...";
+      resultStatus.textContent = "Retrieving pages...";
+      emptyState.style.display = "none";
+      answerSection.style.display = "block";
+      answerQuestion.textContent = `Question: ${query}`;
+      answerText.textContent = "The archive is being searched...";
+      sourcesList.innerHTML = "";
+      sourcesSection.style.display = "none";
+
+      try {
+        const response = await fetch(`${getApiUrl()}/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query, top_k: 3 }),
+        });
+
+        if (!response.ok) throw new Error(`Server error (${response.status})`);
+
+        const data = await response.json();
+        await typeAnswer(data.answer);
+        resultStatus.textContent = `Route: ${data.route}`;
+        sourcesSection.style.display = data.sources.length ? "block" : "none";
+
+        data.sources.forEach((source, index) => {
+          const item = document.createElement("div");
+          item.className = "source";
+          item.innerHTML = `<span class="rank-glyph">${rankGlyph(index + 1)}</span><span class="book-name">${source.book_name}</span><span class="page-tag">page ${source.page_number}</span>`;
+          sourcesList.appendChild(item);
+        });
+      } catch (error) {
+        answerSection.style.display = "none";
+        emptyState.style.display = "grid";
+        resultStatus.textContent = "Awaiting a question";
+        showError(error.message || "Could not get an answer from the API.");
+      }
+
+      askButton.disabled = false;
+      askButton.textContent = "Consult the Archive";
+    }
+
+    askButton.addEventListener("click", askQuestion);
+
+    questionInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && event.ctrlKey) askQuestion();
+    });
+
+    document.querySelectorAll(".chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        questionInput.value = chip.textContent;
+        questionInput.focus();
+      });
+    });
+  </script>
+</body>
+</html>
