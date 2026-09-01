@@ -1,0 +1,5 @@
+# Book 1.Introduction
+
+## Page 75
+
+Fig. 8. Tur Ear“iest KNown PAINTING. KARLIEST It represents boats, wild animals, men hunting, (From Quibell, Hieraconpolis.) and the like. Done in Water Colours on the Wall of a Predynastic Tomb. EGYPT 27 the rudiments of eivili- zation. The men wore a skin over the shoulders, sometimes skin drawers, and again only a short white linen kilt; while the women were clothed in long garments of some textile, probably linen, reaching from the shoulders to the ankles. Statuettes of both sexes without clothing what- ever are, however, very common. Sandals were not unknown. They oc- casionally tattooed their bodies, and they also wrought ornaments such as rings, bracelets and pendants of stone, ivory and bone; with beads of flint, quartz, carnelian, | agate and the like. The women dressed their hair with ornamented ivory combs and pins. For the eye- and face- paint necessary for the toilet, they had palettes of carved slate on which the green colour was ground. They were able to build dwellings of wattle,sometimes smear- ed with mud, and prob- ably later of sun-dried

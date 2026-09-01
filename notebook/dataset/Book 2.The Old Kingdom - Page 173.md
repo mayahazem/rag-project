@@ -1,0 +1,5 @@
+# Book 2.The Old Kingdom
+
+## Page 173
+
+Fic. 53.—LIFE-SIZE STATUE OF PEPI I, WITH FIGURE OF HIS SON; BOTH OF BEATEN COPPER. YW Ow, (Cairo Museum.)

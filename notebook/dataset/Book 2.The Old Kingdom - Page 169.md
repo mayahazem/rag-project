@@ -1,0 +1,5 @@
+# Book 2.The Old Kingdom
+
+## Page 169
+
+(‘umasnyy 011e9) (‘arano’q) ‘Ca TH a-Ta ‘ddIaAOS WOGONIXA GIO NV JO ANLVIS ANOLSAWII— CS “514 HYGHS AHL dO ANLVLS NAGOOM AHL AO GVAH—'TS “9M

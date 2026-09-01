@@ -1,0 +1,5 @@
+# Book 1.Introduction
+
+## Page 101
+
+iy y AIA MID asso II 880 Fig. 27. Esony Tasier oF MENES, First Dynasty, ABypos, 3400 B. C. One of the earliest known examples of hieroglyphics. Top row: At the left the royal hawk of Menes; on the right a chapel with the symbols of the goddess Neit in the court, over which is a boat. Second row: At the left the king holds a vessel marked “ Electrum” (silver-gold alloy), and offers a libation “4 times”; on the right a bull is caught in an enclosure before a shrine bearing a phoenix. Third row: The Nile with boats, towns, and islands. Fourth row: Unintelligible archaic hieroglyphs. Fie. 28. Kina SEMERKHET. (FIRST DyNASTY.) SMITES THE BEDUIN OF SINAI. Relief on the rocks of the Wadi Maghara, Sinai, the earliest monument there, and the earliest known large sculpture. (From Weill, Sinai.) (43)

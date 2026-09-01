@@ -1,0 +1,5 @@
+# Book 1.Introduction
+
+## Page 79
+
+Fic. 10.—PREDYNASTIC POTTERY WITH INCISED DECORATION. (Photograph by Petrie.) Fic. 11.—PREDYNASTIC POTTERY WITH PAINTED DESIGNS OF BOATS, ANIMALS, MEN AND WOMEN. (From de Morgan, Ovzgznes, I, pl. X.)

@@ -1,0 +1,5 @@
+# Book 8.The Restoration and The End
+
+## Page 761
+
+—ALABASTER STATUE OF AMENARDIS, SISTER OF PIANKHI. CAIRO MUSEUM.
