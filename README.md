@@ -158,12 +158,4 @@ Retrieval quality was measured with precision and recall at `top_k = 3` across a
 
 These results suggest the retriever reliably surfaces at least one relevant page per query (driving recall), but often pads results with adjacent, less-relevant pages at `top_k = 3` (limiting precision).
 
-## Screenshots
 
-**Frontend — asking a question and viewing the grounded answer with sources:**
-
-![App running](screenshots/app-running.png)
-
-**Backend running locally:**
-
-![Uvicorn server running](screenshots/uvicorn-running.png)
